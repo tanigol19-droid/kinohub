@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="ТОП-250 лучших фильмов по версии Кинопоиска. Рейтинги, описания, актёры и полная информация о фильмах.">
+    <meta name="keywords" content="кино, фильмы, топ-250, лучшие фильмы, кинопоиск, рейтинг фильмов">
+    <meta name="author" content="KinoHub">
+    <meta name="theme-color" content="#1a1a2e">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="KinoHub - ТОП-250 лучших фильмов">
+    <meta property="og:description" content="ТОП-250 лучших фильмов по версии Кинопоиска. Рейтинги, описания, актёры.">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KinoHub - ТОП-250 лучших фильмов">
+    <meta name="twitter:description" content="ТОП-250 лучших фильмов по версии Кинопоиска">
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-152x152.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KinoHub">
+    
+    <title>ТОП-250 фильмов | KinoHub</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: #e94560;
+        }
+
+        .logo-subtitle {
+            font-size: 11px;
+            color: #a0a0b0;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+        }
+
+        .burger-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .burger-btn span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .offline-banner {
+            background: #e94560;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 12px;
+            display: none;
+        }
+
+        .offline-banner.show {
+            display: block;
+        }
+
+        .hero {
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .movies-section {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (min-width: 1200px) {
+            .movies-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .movies-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        .movie-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-poster {
+            width: 100%;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2a2a3e, #1a1a2e);
+            font-size: 48px;
+        }
+
+        .movie-info {
+            padding: 20px;
+        }
+
+        .movie-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .movie-year {
+            font-size: 12px;
+            color: #ccc;
+            margin-bottom: 8px;
+        }
+
+        .movie-rating {
+            display: inline-block;
+            background: rgba(233, 69, 96, 0.3);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .movie-number {
+            position: absolute;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .page-number:hover, .page-number.active {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+        }
+
+        .loader {
+            text-align: center;
+            padding: 60px;
+            grid-column: 1/-1;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #e94560;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .install-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+            border-radius: 16px;
+            padding: 15px 25px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1001;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(233,69,96,0.3);
+            display: none;
+        }
+
+        .install-banner.show {
+            display: flex;
+        }
+
+        .install-btn {
+            background: #e94560;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .close-install {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+            border-radius: 24px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: #e94560;
+            transform: rotate(90deg);
+        }
+
+        .movie-detail {
+            padding: 30px;
+        }
+
+        .movie-detail-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .movie-detail-poster {
+            width: 250px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .movie-detail-info {
+            flex: 1;
+        }
+
+        .movie-detail-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .movie-detail-year {
+            color: #a0a0b0;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .movie-detail-rating {
+            display: inline-block;
+            background: rgba(233, 69, 96, 0.3);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .movie-detail-description {
+            color: #d0d0e0;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .movie-detail-extra {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        .extra-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .extra-label {
+            font-size: 11px;
+            color: #a0a0b0;
+            text-transform: uppercase;
+        }
+
+        .extra-value {
+            font-size: 14px;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .burger-btn {
+                display: flex;
+            }
+            .nav-menu {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-menu.open {
+                display: flex;
+            }
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 20px;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .movie-poster, .no-poster {
+                height: 220px;
+            }
+            .movie-detail-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .movie-detail-poster {
+                width: 200px;
+                height: 280px;
+            }
+            .install-banner {
+                flex-direction: column;
+                text-align: center;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-banner" id="offlineBanner">📡 Вы офлайн. Данные загружены из кеша.</div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">🏆</div>
+                    <div>
+                        <div class="logo-text">Kino<span>Hub</span></div>
+                        <div class="logo-subtitle">ТОП-250 лучших фильмов</div>
+                    </div>
+                </a>
+                <button class="burger-btn" id="burgerBtn">
+                    <span></span><span></span><span></span>
+                </button>
+                <nav class="nav-menu" id="navMenu">
+                    <a href="index.html" class="nav-link active">ТОП-250</a>
+                    <a href="actors.html" class="nav-link">Актёры</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>🏆 ТОП-250 лучших фильмов</h1>
+                <p>По версии Кинопоиска — величайшие фильмы всех времён</p>
+            </div>
+
+            <div class="movies-section">
+                <h2 class="section-title">Классика мирового кино</h2>
+                <div class="movies-grid" id="moviesGrid">
+                    <div class="loader"><div class="loader-spinner"></div><p>Загрузка фильмов...</p></div>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-close" id="modalClose">&times;</div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="install-banner" id="installBanner">
+        <span>📱 Установите KinoHub на домашний экран</span>
+        <button class="install-btn" id="installBtn">Установить</button>
+        <button class="close-install" id="closeInstallBtn">✕</button>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 KinoHub | Данные Kinopoisk API | ТОП-250 лучших фильмов</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_KEY = '0a601218-e55e-49df-b5ec-98d94aaa4681';
+        let currentPage = 1;
+        let totalPages = 13;
+        let isLoading = false;
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBanner').classList.add('show');
+        });
+
+        document.getElementById('installBtn').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                document.getElementById('installBanner').classList.remove('show');
+            }
+        });
+
+        document.getElementById('closeInstallBtn').addEventListener('click', () => {
+            document.getElementById('installBanner').classList.remove('show');
+        });
+
+        async function loadMovies(page = 1) {
+            if (isLoading) return;
+            isLoading = true;
+            
+            const grid = document.getElementById('moviesGrid');
+            const paginationDiv = document.getElementById('pagination');
+            
+            grid.innerHTML = `<div class="loader"><div class="loader-spinner"></div><p>Загрузка ТОП-250 фильмов...</p></div>`;
+            paginationDiv.innerHTML = '';
+            
+            try {
+                const url = `https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=TOP_250_BEST_FILMS&page=${page}`;
+                const response = await fetch(url, {
+                    headers: { 'X-API-KEY': API_KEY, 'Content-Type': 'application/json' }
+                });
+                
+                if (!response.ok) throw new Error(`Ошибка ${response.status}`);
+                
+                const data = await response.json();
+                if (!data.films || data.films.length === 0) throw new Error('Нет данных');
+                
+                totalPages = data.pagesCount || 13;
+                currentPage = page;
+                
+                renderMovies(data.films, page);
+                renderPagination();
+            } catch (error) {
+                grid.innerHTML = `<div class="loader"><p>❌ Ошибка: ${error.message}</p></div>`;
+            } finally {
+                isLoading = false;
+            }
+        }
+
+        function renderMovies(films, page) {
+            const grid = document.getElementById('moviesGrid');
+            const startNumber = (page - 1) * 20 + 1;
+            
+            grid.innerHTML = films.map((film, index) => {
+                const globalRank = startNumber + index;
+                const posterUrl = film.posterUrl || null;
+                const title = film.nameRu || film.nameEn || 'Без названия';
+                const year = film.year || '—';
+                const rating = film.ratingKinopoisk || '—';
+                
+                return `
+                    <div class="movie-card" data-id="${film.filmId}">
+                        <div class="movie-number">#${globalRank}</div>
+                        ${posterUrl ? 
+                            `<img class="movie-poster" src="${posterUrl}" alt="${title}" onerror="this.style.display='none'; this.parentElement.querySelector('.no-poster').style.display='flex';">` : 
+                            ''
+                        }
+                        <div class="no-poster" style="${posterUrl ? 'display:none;' : 'display:flex;'}">🎬</div>
+                        <div class="movie-info">
+                            <div class="movie-title" title="${title}">${escapeHtml(title)}</div>
+                            <div class="movie-year">📅 ${year}</div>
+                            <div class="movie-rating">⭐ ${rating}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.querySelectorAll('.movie-card').forEach(card => {
+                card.addEventListener('click', () => showMovieDetails(card.dataset.id));
+            });
+        }
+
+        async function showMovieDetails(filmId) {
+            const modal = document.getElementById('movieModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modal.classList.add('active');
+            modalBody.innerHTML = '<div class="loader"><div class="loader-spinner"></div><p>Загрузка деталей...</p></div>';
+            
+            try {
+                const url = `https://kinopoiskapiunofficial.tech/api/v2.2/films/${filmId}`;
+                const response = await fetch(url, {
+                    headers: { 'X-API-KEY': API_KEY, 'Content-Type': 'application/json' }
+                });
+                
+                if (!response.ok) throw new Error('Ошибка загрузки');
+                const film = await response.json();
+                
+                modalBody.innerHTML = `
+                    <div class="movie-detail">
+                        <div class="movie-detail-header">
+                            ${film.posterUrl ? 
+                                `<img class="movie-detail-poster" src="${film.posterUrl}" onerror="this.src='https://placehold.co/400x500/1a1a2e/e94560?text=Нет+постера'">` : 
+                                `<div class="movie-detail-poster" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a2a3e,#1a1a2e);font-size:60px;">🎬</div>`
+                            }
+                            <div class="movie-detail-info">
+                                <h2 class="movie-detail-title">${escapeHtml(film.nameRu || film.nameEn)}</h2>
+                                <div class="movie-detail-year">📅 ${film.year || '—'} | ⏱️ ${film.filmLength || '—'} мин</div>
+                                <div class="movie-detail-rating">⭐ ${film.ratingKinopoisk || '—'} (Кинопоиск)</div>
+                                <div class="movie-detail-description">${film.description ? (film.description.length > 500 ? film.description.substring(0,500)+'...' : film.description) : 'Описание отсутствует'}</div>
+                            </div>
+                        </div>
+                        <div class="movie-detail-extra">
+                            <div class="extra-item"><div class="extra-label">🌍 Страна</div><div class="extra-value">${film.countries?.map(c => c.country).join(', ') || '—'}</div></div>
+                            <div class="extra-item"><div class="extra-label">🎭 Жанр</div><div class="extra-value">${film.genres?.map(g => g.genre).join(', ') || '—'}</div></div>
+                            <div class="extra-item"><div class="extra-label">🎬 Режиссёр</div><div class="extra-value">${film.directors?.map(d => d.nameRu || d.nameEn).join(', ') || '—'}</div></div>
+                            <div class="extra-item"><div class="extra-label">📝 Слоган</div><div class="extra-value">${film.slogan || '—'}</div></div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                modalBody.innerHTML = `<div class="loader"><p>❌ Ошибка: ${error.message}</p></div>`;
+            }
+        }
+
+        function renderPagination() {
+            const paginationDiv = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                paginationDiv.innerHTML = '';
+                return;
+            }
+
+            let pages = [];
+            pages.push(`<button class="page-btn" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>◀ Назад</button>`);
+            
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                pages.push(`<button class="page-number ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`);
+            }
+            if (totalPages > 5) pages.push(`<span>...</span><button class="page-number" data-page="${totalPages}">${totalPages}</button>`);
+            pages.push(`<button class="page-btn" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>Вперед ▶</button>`);
+            
+            paginationDiv.innerHTML = pages.join('');
+            
+            document.querySelectorAll('[data-page]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let page = parseInt(btn.dataset.page);
+                    if (!isNaN(page) && page !== currentPage && page >= 1 && page <= totalPages) {
+                        loadMovies(page);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+        }
+
+        document.getElementById('modalClose').addEventListener('click', () => document.getElementById('movieModal').classList.remove('active'));
+        document.getElementById('movieModal').addEventListener('click', (e) => { if (e.target === document.getElementById('movieModal')) document.getElementById('movieModal').classList.remove('active'); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') document.getElementById('movieModal').classList.remove('active'); });
+        document.getElementById('burgerBtn').addEventListener('click', () => document.getElementById('navMenu').classList.toggle('open'));
+        window.addEventListener('resize', () => { if (window.innerWidth > 768) document.getElementById('navMenu').classList.remove('open'); });
+        
+        window.addEventListener('offline', () => document.getElementById('offlineBanner').classList.add('show'));
+        window.addEventListener('online', () => document.getElementById('offlineBanner').classList.remove('show'));
+
+        loadMovies(1);
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{
+  "name": "KinoHub - Кино портал",
+  "short_name": "KinoHub",
+  "description": "ТОП-250 фильмов, популярные актёры, биография, фильмография и полная информация о кино",
+  "start_url": "/actors.html",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#1a1a2e",
+  "background_color": "#1a1a2e",
+  "orientation": "portrait-primary",
+  "lang": "ru",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "🎭 Популярные актёры",
+      "short_name": "Актёры",
+      "description": "Звёзды мирового кино с биографией и фильмографией",
+      "url": "/actors.html",
+      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "🏆 ТОП-250 фильмов",
+      "short_name": "ТОП-250",
+      "description": "Лучшие фильмы всех времён по версии Кинопоиска",
+      "url": "/index.html",
+      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "🔍 Поиск актёра",
+      "short_name": "Поиск",
+      "description": "Быстрый поиск актёров по имени",
+      "url": "/actors.html?search",
+      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "categories": ["entertainment", "movies", "video"],
+  "screenshots": [
+    {
+      "src": "screenshots/actors-mobile.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Список популярных актёров"
+    },
+    {
+      "src": "screenshots/actor-detail.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Детальная страница актёра с фильмографией"
+    },
+    {
+      "src": "screenshots/actors-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Десктопная версия сайта"
+    }
+  ],
+  "prefer_related_applications": false,
+  "display_override": ["standalone", "minimal-ui"]
+}
