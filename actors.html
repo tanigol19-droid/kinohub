@@ -4,28 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Популярные актёры киноиндустрии. Биография, фильмография, фото знаменитостей. Поиск актёров и история просмотров.">
-    <meta name="keywords" content="актёры, кино, голливуд, знаменитости, фильмы, биография, фильмография, поиск актёров">
-    <meta name="author" content="KinoHub">
-    <meta name="theme-color" content="#1a1a2e">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="KinoHub - Популярные актёры">
-    <meta property="og:description" content="Знаменитости мирового кинематографа. Биография, фильмография и фото.">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="KinoHub - Популярные актёры">
-    <meta name="twitter:description" content="Знаменитости мирового кинематографа. Биография, фильмография и фото.">
+    <title>Популярные актёры | KinoHub</title>
     
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-152x152.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="KinoHub">
-    
-    <title>Популярные актёры | KinoHub</title>
     
     <style>
         * {
@@ -34,20 +18,53 @@
             box-sizing: border-box;
         }
 
+        /* ========== СВЕТЛАЯ ТЕМА (по умолчанию) ========== */
+        :root {
+            --bg-gradient-start: #f5f5f5;
+            --bg-gradient-end: #e0e0e0;
+            --header-bg: #ffffff;
+            --text-color: #1a1a2e;
+            --text-secondary: #666;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --accent-color: #e94560;
+            --accent-gradient: linear-gradient(135deg, #e94560, #ff6b6b);
+            --footer-bg: #f0f0f0;
+            --input-bg: #fff;
+            --input-border: #ddd;
+        }
+
+        /* ========== ТЁМНАЯ ТЕМА ========== */
+        body.dark {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-end: #16213e;
+            --header-bg: #0f0f1a;
+            --text-color: #fff;
+            --text-secondary: #a0a0b0;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-border: rgba(233, 69, 96, 0.3);
+            --accent-color: #e94560;
+            --accent-gradient: linear-gradient(135deg, #e94560, #ff6b6b);
+            --footer-bg: #0f0f1a;
+            --input-bg: rgba(255, 255, 255, 0.1);
+            --input-border: rgba(255, 255, 255, 0.2);
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             min-height: 100vh;
-            color: #fff;
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
 
         .header {
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            background: var(--header-bg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid rgba(233, 69, 96, 0.3);
+            border-bottom: 1px solid var(--card-border);
         }
 
         .container {
@@ -75,7 +92,7 @@
 
         .logo-icon {
             font-size: 32px;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: var(--accent-gradient);
             width: 48px;
             height: 48px;
             border-radius: 12px;
@@ -87,6 +104,7 @@
         .logo-text {
             font-size: 24px;
             font-weight: 700;
+            color: var(--text-color);
         }
 
         .logo-text span {
@@ -95,17 +113,18 @@
 
         .logo-subtitle {
             font-size: 11px;
-            color: #a0a0b0;
+            color: var(--text-secondary);
         }
 
         .nav-menu {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
+            align-items: center;
         }
 
         .nav-link {
-            color: #e0e0e0;
+            color: var(--text-secondary);
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 30px;
@@ -113,7 +132,24 @@
         }
 
         .nav-link:hover, .nav-link.active {
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        /* Кнопка переключения темы */
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 30px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            color: var(--text-color);
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-gradient);
             color: white;
         }
 
@@ -129,21 +165,27 @@
         .burger-btn span {
             width: 25px;
             height: 3px;
-            background: white;
+            background: var(--text-color);
             border-radius: 3px;
         }
 
-        .offline-banner {
-            background: #e94560;
-            color: white;
+        .hero {
+            padding: 60px 20px;
             text-align: center;
-            padding: 8px;
-            font-size: 12px;
-            display: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin: 30px 0;
+            color: white;
         }
 
-        .offline-banner.show {
-            display: block;
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
         }
 
         .search-section {
@@ -162,24 +204,20 @@
             padding: 12px 20px;
             border: none;
             border-radius: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: var(--card-bg);
+            color: var(--text-color);
             font-size: 16px;
             outline: none;
-        }
-
-        .search-input:focus {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+            border: 1px solid var(--card-border);
         }
 
         .search-input::placeholder {
-            color: #aaa;
+            color: var(--text-secondary);
         }
 
         .search-btn {
             padding: 12px 24px;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: var(--accent-gradient);
             border: none;
             border-radius: 30px;
             color: white;
@@ -192,7 +230,7 @@
         }
 
         .clear-search {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(128, 128, 128, 0.3);
         }
 
         .clear-search:hover {
@@ -200,10 +238,11 @@
         }
 
         .history-section {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
             border-radius: 16px;
             padding: 15px 20px;
             margin-bottom: 30px;
+            border: 1px solid var(--card-border);
         }
 
         .history-title {
@@ -223,21 +262,24 @@
         }
 
         .history-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(128, 128, 128, 0.2);
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 12px;
             cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-color);
         }
 
         .history-item:hover {
             background: #e94560;
+            color: white;
         }
 
         .clear-history {
             background: none;
             border: none;
-            color: #888;
+            color: var(--text-secondary);
             cursor: pointer;
             font-size: 12px;
             margin-left: auto;
@@ -245,24 +287,6 @@
 
         .clear-history:hover {
             color: #e94560;
-        }
-
-        .hero {
-            padding: 60px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            margin: 30px 0 20px;
-        }
-
-        .hero h1 {
-            font-size: 42px;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            opacity: 0.9;
         }
 
         .actors-section {
@@ -274,6 +298,7 @@
             font-size: 32px;
             margin-bottom: 40px;
             position: relative;
+            color: var(--text-color);
         }
 
         .section-title::after {
@@ -284,7 +309,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 3px;
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: var(--accent-gradient);
         }
 
         .actors-grid {
@@ -307,19 +332,20 @@
         }
 
         .actor-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
             backdrop-filter: blur(10px);
             border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s ease;
             text-align: center;
             cursor: pointer;
+            border: 1px solid var(--card-border);
         }
 
         .actor-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(233, 69, 96, 0.1);
         }
 
         .actor-photo {
@@ -335,7 +361,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #2a2a3e, #1a1a2e);
+            background: var(--card-bg);
             font-size: 48px;
         }
 
@@ -347,11 +373,12 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 8px;
+            color: var(--text-color);
         }
 
         .actor-profession {
             font-size: 12px;
-            color: #ccc;
+            color: var(--text-secondary);
             margin-bottom: 10px;
         }
 
@@ -361,6 +388,7 @@
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 12px;
+            color: var(--text-color);
         }
 
         .pagination {
@@ -373,9 +401,9 @@
         }
 
         .page-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
             padding: 10px 16px;
             border-radius: 8px;
             cursor: pointer;
@@ -383,11 +411,13 @@
         }
 
         .page-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: var(--accent-gradient);
+            color: white;
         }
 
         .page-btn.active {
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: var(--accent-gradient);
+            color: white;
         }
 
         .page-btn:disabled {
@@ -401,13 +431,16 @@
             justify-content: center;
             min-width: 40px;
             height: 40px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--card-bg);
             border-radius: 8px;
             cursor: pointer;
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
         }
 
         .page-number:hover, .page-number.active {
-            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            background: var(--accent-gradient);
+            color: white;
         }
 
         .loader {
@@ -419,7 +452,7 @@
         .loader-spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.2);
+            border: 4px solid rgba(233, 69, 96, 0.2);
             border-top-color: #e94560;
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -437,44 +470,7 @@
             grid-column: 1/-1;
         }
 
-        .install-banner {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
-            border-radius: 16px;
-            padding: 15px 25px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            z-index: 1001;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            border: 1px solid rgba(233,69,96,0.3);
-            display: none;
-        }
-
-        .install-banner.show {
-            display: flex;
-        }
-
-        .install-btn {
-            background: #e94560;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .close-install {
-            background: none;
-            border: none;
-            color: #888;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
+        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -495,7 +491,7 @@
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #1e1e2e, #2a2a3e);
+            background: var(--card-bg);
             border-radius: 24px;
             max-width: 800px;
             width: 100%;
@@ -503,6 +499,7 @@
             overflow-y: auto;
             position: relative;
             animation: modalFadeIn 0.3s ease;
+            border: 1px solid var(--card-border);
         }
 
         @keyframes modalFadeIn {
@@ -522,11 +519,10 @@
             right: 20px;
             font-size: 28px;
             cursor: pointer;
-            color: white;
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -536,6 +532,7 @@
 
         .modal-close:hover {
             background: #e94560;
+            color: white;
             transform: rotate(90deg);
         }
 
@@ -551,8 +548,8 @@
         }
 
         .actor-detail-photo {
-            width: 250px;
-            height: 300px;
+            width: 200px;
+            height: 250px;
             object-fit: cover;
             border-radius: 16px;
         }
@@ -562,14 +559,14 @@
         }
 
         .actor-detail-name {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
-            color: white;
+            color: var(--text-color);
             margin-bottom: 8px;
         }
 
         .actor-detail-birth {
-            color: #a0a0b0;
+            color: var(--text-secondary);
             margin-bottom: 15px;
             font-size: 14px;
             line-height: 1.6;
@@ -582,12 +579,13 @@
             border-radius: 30px;
             font-size: 13px;
             margin-bottom: 20px;
+            color: var(--text-color);
         }
 
         .actor-detail-bio {
-            color: #d0d0e0;
+            color: var(--text-secondary);
             line-height: 1.6;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.1);
             padding: 20px;
             border-radius: 16px;
             margin-bottom: 25px;
@@ -597,7 +595,7 @@
         }
 
         .actor-films {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.1);
             padding: 20px;
             border-radius: 16px;
         }
@@ -618,19 +616,111 @@
         }
 
         .actor-film-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(128, 128, 128, 0.2);
             padding: 6px 14px;
             border-radius: 25px;
             font-size: 13px;
+            color: var(--text-color);
+        }
+
+        /* Форма обратной связи */
+        .feedback-section {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid var(--card-border);
+        }
+
+        .feedback-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--text-color);
+        }
+
+        .feedback-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 12px 16px;
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #e94560;
+            box-shadow: 0 0 5px rgba(233, 69, 96, 0.5);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: var(--accent-gradient);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
             color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .form-message {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            display: block;
         }
 
         footer {
             text-align: center;
             padding: 30px;
-            color: #666;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            border-top: 1px solid var(--card-border);
             margin-top: 20px;
+            background: var(--footer-bg);
         }
 
         @media (max-width: 768px) {
@@ -661,10 +751,6 @@
                 align-items: center;
                 text-align: center;
             }
-            .actor-detail-photo {
-                width: 200px;
-                height: 250px;
-            }
             .search-box {
                 flex-direction: column;
             }
@@ -675,17 +761,10 @@
             .clear-history {
                 margin-left: 0;
             }
-            .install-banner {
-                flex-direction: column;
-                text-align: center;
-                width: 90%;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="offline-banner" id="offlineBanner">📡 Вы офлайн. Данные загружены из кеша.</div>
-
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -702,6 +781,7 @@
                 <nav class="nav-menu" id="navMenu">
                     <a href="index.html" class="nav-link">ТОП-250</a>
                     <a href="actors.html" class="nav-link active">Актёры</a>
+                    <button class="theme-toggle" id="themeToggle">🌙 Тёмная тема</button>
                 </nav>
             </div>
         </div>
@@ -737,6 +817,27 @@
                 </div>
                 <div class="pagination" id="pagination"></div>
             </div>
+
+            <!-- ФОРМА ОБРАТНОЙ СВЯЗИ -->
+            <div class="feedback-section">
+                <h2 class="feedback-title">📬 Обратная связь</h2>
+                <form class="feedback-form" id="feedbackForm">
+                    <div class="form-group">
+                        <label>Ваше имя *</label>
+                        <input type="text" id="feedbackName" placeholder="Иван Иванов" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="feedbackEmail" placeholder="ivan@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Сообщение *</label>
+                        <textarea id="feedbackMessage" placeholder="Поделитесь своим мнением об актёрах..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">📨 Отправить сообщение</button>
+                    <div id="formMessage" class="form-message"></div>
+                </form>
+            </div>
         </div>
     </main>
 
@@ -747,19 +848,73 @@
         </div>
     </div>
 
-    <div class="install-banner" id="installBanner">
-        <span>📱 Установите KinoHub на домашний экран</span>
-        <button class="install-btn" id="installBtn">Установить</button>
-        <button class="close-install" id="closeInstallBtn">✕</button>
-    </div>
-
     <footer>
         <div class="container">
-            <p>© 2025 KinoHub | Данные TMDB API | Поиск по имени | История просмотров | PWA</p>
+            <p>© 2025 KinoHub | Данные TMDB API | Поиск по имени | История просмотров</p>
         </div>
     </footer>
 
     <script>
+        // ========== ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ==========
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark');
+                document.getElementById('themeToggle').textContent = '☀️ Светлая тема';
+            }
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️ Светлая тема' : '🌙 Тёмная тема';
+        });
+
+        initTheme();
+
+        // ========== ФОРМА ОБРАТНОЙ СВЯЗИ ==========
+        const form = document.getElementById('feedbackForm');
+        const formMessage = document.getElementById('formMessage');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('feedbackName').value.trim();
+            const email = document.getElementById('feedbackEmail').value.trim();
+            const message = document.getElementById('feedbackMessage').value.trim();
+            
+            if (!name || !email || !message) {
+                formMessage.textContent = '❌ Заполните все поля!';
+                formMessage.className = 'form-message error';
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formMessage.textContent = '❌ Введите корректный email (например, name@domain.com)';
+                formMessage.className = 'form-message error';
+                return;
+            }
+            
+            console.log('📨 Новая заявка с сайта KinoHub (актёры):');
+            console.log(`👤 Имя: ${name}`);
+            console.log(`📧 Email: ${email}`);
+            console.log(`💬 Сообщение: ${message}`);
+            console.log(`🕒 Время отправки: ${new Date().toLocaleString()}`);
+            
+            formMessage.textContent = '✅ Спасибо! Ваше сообщение отправлено.';
+            formMessage.className = 'form-message success';
+            
+            form.reset();
+            
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+                formMessage.className = 'form-message';
+            }, 3000);
+        });
+
+        // ========== API НАСТРОЙКИ ==========
         const API_KEY = '1c5ac27c50df2a90c16b83519704276c';
         const BASE_URL = 'https://api.themoviedb.org/3';
         const IMG_URL = 'https://image.tmdb.org/t/p/w500';
@@ -770,27 +925,6 @@
         let isSearchMode = false;
         let searchQuery = '';
         let viewHistory = [];
-        let deferredPrompt;
-
-        // PWA установка
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installBanner').classList.add('show');
-        });
-
-        document.getElementById('installBtn').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                document.getElementById('installBanner').classList.remove('show');
-            }
-        });
-
-        document.getElementById('closeInstallBtn').addEventListener('click', () => {
-            document.getElementById('installBanner').classList.remove('show');
-        });
 
         // История просмотров
         function loadHistory() {
@@ -910,7 +1044,7 @@
                 modalBody.innerHTML = `
                     <div class="actor-detail">
                         <div class="actor-detail-header">
-                            ${actor.profile_path ? `<img class="actor-detail-photo" src="${IMG_URL + actor.profile_path}" onerror="this.src='https://placehold.co/400x300/1a1a2e/e94560?text=Нет+фото'">` : `<div class="actor-detail-photo" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a2a3e,#1a1a2e);font-size:60px;">🎭</div>`}
+                            ${actor.profile_path ? `<img class="actor-detail-photo" src="${IMG_URL + actor.profile_path}" onerror="this.src='https://placehold.co/400x300/1a1a2e/e94560?text=Нет+фото'">` : `<div class="actor-detail-photo" style="display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);font-size:60px;">🎭</div>`}
                             <div class="actor-detail-info">
                                 <h2 class="actor-detail-name">${escapeHtml(actor.name)}</h2>
                                 ${actor.birthday ? `<div class="actor-detail-birth">📅 Дата рождения: ${actor.birthday}</div>` : ''}
@@ -975,9 +1109,6 @@
         document.getElementById('clearSearchBtn').addEventListener('click', clearSearch);
         document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
         document.getElementById('searchInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
-
-        window.addEventListener('offline', () => document.getElementById('offlineBanner').classList.add('show'));
-        window.addEventListener('online', () => document.getElementById('offlineBanner').classList.remove('show'));
 
         loadHistory();
         fetchActors(1);
